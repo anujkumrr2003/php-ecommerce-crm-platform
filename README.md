@@ -1,64 +1,294 @@
-# CRM + Online Store Admin  (Part 1 of 2)
+# PHP E-commerce CRM & Online Store Management System
 
-This ZIP is the **CRM / admin panel**: customers, products, billing, reminders, WhatsApp, employees with roles and permissions,
-plus the complete **Online Store management** (orders, payments, banners, categories, pages, coupons, reviews, shipping, Razorpay, e-mail).
-The public website is the **second ZIP** (`ecommerce-website`). Both use the **same database**.
+**Part 1 of 2 – CRM & Online Store Admin Panel**
 
-> One client = one installation of CRM + one website + one empty database. This keeps every client's products, customers,
-> orders, Razorpay keys and settings completely separate. See `DEPLOYMENT-GUIDE.md`.
+A full-featured CRM and E-commerce Management Platform developed using Core PHP and MySQL. This project combines business management functionality with a complete Online Store administration system.
 
-## 1. Requirements
-PHP 7.4 or newer (8.x recommended), MySQL 5.7+ / MariaDB 10.3+, PHP extensions `mysqli mbstring curl openssl iconv`, Apache with `mod_rewrite` (Hostinger / cPanel / any shared hosting works).
+The platform helps businesses manage customers, products, employees, billing, orders, payments, inventory-related operations, and website content from a centralized CRM dashboard.
 
-## 2. Install a NEW client (about 5 minutes)
-1. In your hosting panel create an **empty MySQL database** + user.
-2. Upload the contents of this ZIP to a folder, e.g. `public_html/crm`.
-3. Open `https://your-domain.com/crm/install/` and fill the form (database, business name, Super Admin name/e-mail/password). Tick *demo content* if you want sample products to see the website working.
-4. **Delete the `install` folder.**
-5. Log in at `https://your-domain.com/crm/login.php`.
-6. Open **Online Store -> Website settings**: enter the website address, Razorpay keys (Payments), SMTP e-mail details (E-mail), colours (Colours & fonts).
-7. Install the website ZIP (its own `install/`).
+The public-facing E-commerce Website is maintained in a separate repository (Part 2). Both applications connect to the same MySQL database.
 
-Prefer phpMyAdmin? Import the ONE file `database/complete_database.sql` into an empty database (it contains the complete CRM + website tables and demo products; demo login `admin@demo.com` / `Admin@12345`, password change forced at first login), then copy `config.sample.php` to `config.php` and edit it.
+---
 
-## 3. Add the online store to your EXISTING live CRM (keeps all your data)
-1. **Backup** the database and the files.
-2. Upload all files of this ZIP over your CRM folder, **but keep your own `config.php`** (it is not in this ZIP).
-3. In phpMyAdmin run `database/extra_only_for_old_live_crm/upgrade_to_ecommerce.sql` on your CRM database (safe to run twice). Use this ONLY for an existing live CRM; everyone else uses `complete_database.sql`.
-4. Log in as Super Admin -> **Team & Access -> Roles & permissions** and tick the new *Website* permissions for Admin / Manager as needed (Admin already has them).
-5. Install the website ZIP and point it to the same database.
-Existing customers, products, bills and settings are not changed. Website orders appear in **Billing** automatically (one invoice per confirmed order), so dashboard graphs include online sales.
+## Project Overview
 
-## 4. Where things are (menu **Online Store**)
-| Menu | What it does |
+This project consists of two integrated applications:
+
+| Application | Description |
 |---|---|
-| Store Overview | Today's orders / sales, orders to ship, returns, failed payments |
-| Orders | Every website order: status, courier + tracking, cancel, return approval, refund, history. Each change e-mails the customer |
-| Payments & Refunds | Razorpay payments, failed attempts, refunds, COD to collect |
-| Website Customers | Accounts, orders, purchases, wishlist, activity; block / unblock; newsletter subscribers |
-| Products on Website | Hide a product, mark Featured / New / Best seller, SEO text (products themselves are added in **Products**) |
-| Categories / Banners / Home Page Sections | Category pictures, hero slider (separate **desktop and mobile** image), which sections show on the home page |
-| Pages / FAQ | Privacy Policy, Terms, Return Policy, Shipping Policy, About Us, any new page; FAQ |
-| Coupons & Offers / Reviews | Percentage or flat codes with limits; approve reviews |
-| State-wise Shipping | Optional charge per state |
-| E-mail Templates | Edit every customer e-mail (OTP, order, shipped, delivered, cancel, return, refund ...), preview, send test |
-| Website Settings | Address, colours & fonts, social links, SEO, shipping & checkout rules, **Razorpay keys**, SMTP |
+| CRM & Admin Panel | Manages business operations, customers, employees, products, billing, and online store activities. |
+| Public E-commerce Website | Provides customers with online shopping, accounts, cart, wishlist, checkout, and order management. |
 
-Everything in Online Store is protected by role permissions (Super Admin sees all). *Website Inquiries* is unchanged: the website contact form creates inquiries and rings the bell.
+**Multi-client Architecture:** Each client gets an independent CRM installation, an independent website installation, and a separate database. This keeps customer records, products, orders, payment credentials, and business settings isolated between clients.
 
-## 5. Security notes
-* Passwords are hashed, every form has a CSRF token, every query is prepared, uploads accept real images only, secrets are never shown again after saving.
-* Razorpay secret and SMTP password are stored in the `settings` table of that client's own database. Restrict database access accordingly and use HTTPS.
-* After install delete `install/`. Keep `config.php` private (it is blocked from the web by `.htaccess`).
-* `cron-send.php` / `cron-sync-apis.php` need the `CRON_KEY` from `config.php`.
+## Technologies Used
 
-## 6. Folder map
+- **Backend:** Core PHP
+- **Database:** MySQL
+- **Database Connectivity:** MySQLi
+- **Frontend:** HTML5, CSS3, JavaScript
+- **Server:** Apache
+- **Payment Gateway:** Razorpay
+- **Email Integration:** PHPMailer / SMTP
+- **API Integration:** WhatsApp and other supported APIs
+
+## Key Features
+
+### 1. CRM & Business Management
+
+- Admin dashboard and business overview
+- Customer management
+- Product management
+- Employee management
+- Role-based access control
+- User permissions
+- Billing and invoice management
+- Reminders and task management
+- Activity logs
+- Notifications
+- Website inquiry management
+- WhatsApp integration
+
+### 2. Online Store Management
+
+- Centralized online store dashboard
+- Website order management
+- Payment tracking and refunds
+- Website customer management
+- Product visibility and featured product settings
+- Product categories
+- Desktop and mobile homepage banners
+- Homepage section management
+- CMS pages and FAQ management
+- Coupon and discount management
+- Customer reviews and approval
+- State-wise shipping configuration
+- Email templates and notifications
+- Website SEO settings
+- Website branding and social media settings
+
+### 3. Order & Payment Management
+
+- Online order status management
+- Courier and tracking details
+- Order cancellation
+- Return request approval
+- Refund management
+- Razorpay payment integration
+- Failed payment tracking
+- Cash on Delivery management
+- Automatic invoice creation for confirmed website orders
+- Customer email notifications for order updates
+
+### 4. Website Configuration
+
+Administrators can configure:
+
+- Website URL
+- Business address
+- Website colours and fonts
+- Social media links
+- SEO settings
+- Shipping and checkout rules
+- Razorpay API credentials
+- SMTP email configuration
+
+### 5. Security & Access Control
+
+- Password hashing
+- CSRF token validation
+- Prepared SQL queries
+- Role-based permissions
+- Image upload validation
+- Private configuration files
+- Protected API credentials
+- Client-specific database isolation
+
+---
+
+## Project Architecture
+
+```text
+PHP E-commerce CRM Platform
+│
+├── CRM Admin Panel
+│   ├── Dashboard
+│   ├── Customers
+│   ├── Products
+│   ├── Employees
+│   ├── Billing & Invoices
+│   ├── Roles & Permissions
+│   ├── Reminders
+│   └── Online Store Management
+│
+├── Online Store Administration
+│   ├── Orders
+│   ├── Payments & Refunds
+│   ├── Website Customers
+│   ├── Categories & Banners
+│   ├── Coupons & Offers
+│   ├── Pages & FAQ
+│   ├── Reviews
+│   ├── Shipping
+│   └── Website Settings
+│
+└── Public E-commerce Website
+    └── Separate Repository (Part 2)
 ```
-install/            one-time installer (delete after use)
-includes/           login, permissions, menu, notifications, webcore (shared with website)
-web-*.php           Online Store admin screens
-database/complete_database.sql   the ONE complete database (CRM + website)
-database/extra_only_for_old_live_crm/   only for adding the store to an old live CRM
-uploads/products    product pictures      uploads/web   banners, category pictures
-config.sample.php   copy to config.php (the installer does it for you)
+
+## Repository Structure
+
+```text
+php-ecommerce-crm-platform/
+│
+├── install/
+│   └── Installation files
+│
+├── includes/
+│   ├── Authentication
+│   ├── Permissions
+│   ├── Navigation and Menus
+│   ├── Notifications
+│   └── Shared Web Core
+│
+├── database/
+│   ├── complete_database.sql
+│   └── extra_only_for_old_live_crm/
+│
+├── uploads/
+│   ├── products/
+│   └── web/
+│
+├── web-*.php
+│   └── Online Store administration screens
+│
+├── config.sample.php
+├── .gitignore
+├── login.php
+├── index.php
+└── README.md
 ```
+
+*The folder structure above describes the main application components. Private configuration files, production uploads and sensitive database backups must not be committed.*
+
+---
+
+## Installation Requirements
+
+- PHP 7.4 or newer (PHP 8.x recommended)
+- MySQL 5.7+ or MariaDB 10.3+
+- Apache Web Server
+- Apache `mod_rewrite`
+- PHP Extensions:
+  - mysqli
+  - mbstring
+  - curl
+  - openssl
+  - iconv
+
+Compatible with XAMPP, Hostinger, cPanel and other supported Apache hosting environments.
+
+## Installation Guide
+
+### Option 1: Install a New Client
+
+1. Create a new empty MySQL database and database user.
+2. Upload the CRM project files to your hosting directory, for example `public_html/crm`.
+3. Open the installation URL:
+
+   `https://your-domain.com/crm/install/`
+
+4. Enter database credentials and create the Super Admin account.
+5. Select demo content if sample products and records are required.
+6. Complete the installation.
+7. Delete the `install` directory after successful installation.
+8. Log in using:
+
+   `https://your-domain.com/crm/login.php`
+
+9. Open Online Store → Website Settings.
+10. Configure website URL, Razorpay credentials, SMTP details, colours and other settings.
+
+### Option 2: Install Using phpMyAdmin
+
+1. Create an empty MySQL database.
+2. Import the complete database schema and approved demo data.
+3. Configure the private database connection file.
+4. Create or configure the Super Admin account securely.
+5. Complete the website installation using the second project.
+
+**Database:** `database/complete_database.sql`
+
+Do not publish production database backups or actual customer records.
+
+### Option 3: Upgrade an Existing Live CRM
+
+This option is intended for businesses already using an older version of the CRM.
+
+1. Take a complete backup of the database and application files.
+2. Upload the updated CRM files.
+3. Preserve the existing private `config.php`.
+4. Execute the following SQL upgrade script using phpMyAdmin:
+
+   `database/extra_only_for_old_live_crm/upgrade_to_ecommerce.sql`
+
+5. Assign the new Website permissions to the required employee roles.
+6. Install the separate E-commerce Website project.
+7. Connect the website to the same CRM database.
+
+**Important:** The upgrade script is intended only for an existing live CRM. Do not use it for a fresh installation.
+
+---
+
+## Database Integration
+
+Both the CRM and public E-commerce Website use the same MySQL database.
+
+The integration connects:
+
+- CRM Products → Website Products
+- CRM Customers → Website Customers
+- Website Orders → CRM Billing
+- Website Payments → Payment Management
+- Website Settings → Online Store Configuration
+
+Confirmed website orders are integrated into CRM billing according to the application's order workflow.
+
+## Security Considerations
+
+- Never commit actual database credentials.
+- Keep `config.php` private.
+- Use HTTPS in production.
+- Change default demo credentials immediately.
+- Protect Razorpay API secrets and SMTP passwords.
+- Delete installation directories after installation.
+- Restrict access to database backups and customer information.
+- Configure cron jobs using private `CRON_KEY` credentials.
+
+---
+
+## Related Project – Part 2
+
+**Public E-commerce Website**
+
+The customer-facing shopping website is maintained separately.
+
+It connects to this CRM database and uses the products, categories, banners, orders, customers and website settings managed through the CRM.
+
+**Repository:** Add Part 2 GitHub repository URL here after publishing it.
+
+---
+
+## Developer Information
+
+**Project:** PHP E-commerce CRM & Online Store Management System
+
+**Development:** Full-stack PHP and MySQL development
+
+**Primary Technologies:** Core PHP, MySQL, JavaScript, HTML5, CSS3
+
+**GitHub:** (https://github.com/anujkumrr2003)
+
+---
+
+*This project demonstrates practical experience in CRM development, database design, business workflow automation, E-commerce administration, payment integration and PHP application development.*

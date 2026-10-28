@@ -1,0 +1,8 @@
+# Keep internal files private
+<FilesMatch "^(config|settings-helper|customer-core|welcome-whatsapp)\.php$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "\.(sql|md|log)$">
+  Require all denied
+</FilesMatch>
+Options -Indexes

@@ -1,0 +1,68 @@
+/* =====================================================================
+   crm.css  -  rules that apply to the WHOLE project (loaded after style.css)
+   1) corners 2-5px only      2) every table looks the same (1px border, 11px)
+   3) table toolbar / pagination (crm-table.js)   4) bell animation
+   ===================================================================== */
+:root{
+  --bs-border-radius:4px;--bs-border-radius-sm:3px;--bs-border-radius-lg:5px;--bs-border-radius-xl:5px;--bs-border-radius-xxl:5px;--bs-border-radius-2xl:5px;--bs-border-radius-pill:5px;
+  --tb-line:#cdd5e1;--tb-head:#eaeef5;--tb-hover:#fbf6e8;--r:4px;
+}
+.rounded,.rounded-1,.rounded-2,.rounded-3,.rounded-4,.rounded-5,.rounded-pill,.rounded-circle{border-radius:var(--r)!important}
+.modal-content,.dropdown-menu,.toast,.alert,.card,.panel,.stat,.btn,.form-control,.form-select,.input-group-text,.badge,.badge-s,.page-link,.nav-link,.list-group-item,.auth-card{border-radius:var(--r)!important}
+.input-group>.form-control,.input-group>.form-select,.input-group>.input-group-text,.input-group>.btn{border-radius:0!important}
+.input-group>:first-child{border-top-left-radius:var(--r)!important;border-bottom-left-radius:var(--r)!important}
+.input-group>:last-child{border-top-right-radius:var(--r)!important;border-bottom-right-radius:var(--r)!important}
+.av,.notif-ic,.notif-btn .dot,.brand-mark,.form-check-input[type=radio]{border-radius:var(--r)!important}
+.form-check-input[type=checkbox]{border-radius:3px!important}.form-switch .form-check-input{border-radius:5px!important}
+.brand-logo{background:#fff;overflow:hidden;padding:2px}.brand-logo img{width:100%;height:100%;object-fit:contain}
+
+/* ------------------------------------------------------------- tables */
+:is(.main,.modal) table:not(.inv-table){width:100%;border-collapse:collapse!important;border:1px solid var(--tb-line)!important;font-size:11px!important;margin-bottom:0}
+:is(.main,.modal) table:not(.inv-table) > thead > tr > th{background:var(--tb-head)!important;color:var(--navy)!important;font-weight:600!important;font-size:11px!important;
+  padding:6px 8px!important;border:1px solid var(--tb-line)!important;white-space:nowrap;text-transform:none!important;letter-spacing:0!important;vertical-align:middle}
+:is(.main,.modal) table:not(.inv-table) > tbody > tr > td,:is(.main,.modal) table:not(.inv-table) > tfoot > tr > td{padding:4px 4px!important;border:1px solid var(--tb-line)!important;font-size:11px!important;vertical-align:middle!important;line-height:1.4}
+:is(.main,.modal) table:not(.inv-table) > tbody > tr:nth-child(even) > td{background:#fafbfd}
+:is(.main,.modal) table:not(.inv-table) > tbody > tr:hover > td{background:var(--tb-hover)}
+:is(.main,.modal) table:not(.inv-table) :is(small,.small,.text-muted){font-size:10px!important}
+:is(.main,.modal) table:not(.inv-table) :is(.form-select,.form-control){font-size:11px;padding:2px 6px;min-height:0;height:auto}
+:is(.main,.modal) table:not(.inv-table) .form-select{padding-right:1.6rem}
+:is(.main,.modal) table:not(.inv-table) .btn-sm{font-size:11px;padding:2px 7px}
+:is(.main,.modal) table:not(.inv-table) .btn-icon{padding:2px 5px;font-size:12px}
+:is(.main,.modal) table:not(.inv-table) .badge-s{font-size:10px;padding:1px 7px}
+th.act,td.act{text-align:right}
+.crm-sortable{cursor:pointer}.crm-sortable:hover{color:var(--gold)!important}
+.table-responsive{border-radius:var(--r)}
+
+/* table toolbar (search + filters) and footer (page size + pager) */
+.crm-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+.crm-search{position:relative;flex:1 1 220px;max-width:340px}
+.crm-search i{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:12px;pointer-events:none}
+.crm-search input,.crm-filter,.crm-per select{font-size:12px;border:1px solid var(--tb-line);border-radius:var(--r);background:#fff;color:var(--ink);padding:5px 8px;height:30px}
+.crm-search input{width:100%;padding-left:28px}
+.crm-search input:focus,.crm-filter:focus,.crm-per select:focus{border-color:var(--gold);outline:0;box-shadow:0 0 0 .15rem rgba(201,162,75,.22)}
+.crm-filter{max-width:170px}
+.crm-clear{border:0;background:none;color:#b02a37;font-size:12px;padding:0 4px}
+.crm-count{margin-left:auto;color:var(--mut);font-size:11px}
+.crm-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:10px;font-size:11px;color:var(--mut)}
+.crm-per{display:flex;align-items:center;gap:6px;margin:0}.crm-per select{height:26px;padding:1px 4px}
+.crm-foot .page-link{font-size:11px;padding:3px 9px;color:var(--navy)}
+.crm-foot .page-item.active .page-link{background:var(--navy);border-color:var(--navy);color:#fff}
+.crm-none{padding:1.4rem;text-align:center;color:var(--mut);font-size:12px;border:1px solid var(--tb-line);border-top:0}
+
+/* ------------------------------------------------------------- bell */
+@keyframes crm-ring{0%{transform:rotate(0)}10%{transform:rotate(18deg)}20%{transform:rotate(-16deg)}30%{transform:rotate(14deg)}40%{transform:rotate(-12deg)}50%{transform:rotate(9deg)}60%{transform:rotate(-6deg)}70%{transform:rotate(3deg)}100%{transform:rotate(0)}}
+.notif-btn.ringing>.bi-bell{display:inline-block;transform-origin:50% 0;animation:crm-ring 1s ease-in-out 2;color:var(--gold)}
+.notif-btn .dot{display:grid}.notif-btn .dot.d-none{display:none}
+.notif-head #notifSound{font-size:1rem}
+.notif-ic.d-inline-grid{width:24px;height:24px;font-size:.8rem;vertical-align:middle}
+
+/* --------------------------------------------------------- permissions */
+.perm-table .perm-module td{background:#f4f1e6!important;font-weight:600;color:var(--navy)}
+.perm-table td.text-center .form-check-input{width:1.1rem;height:1.1rem;margin:0;cursor:pointer}
+.role-pick{min-width:110px}
+.badge-s.b-gold{background:#f7ecd0;color:#7a5a10}
+
+/* ------------------------------------------------------------ dashboard graphs */
+.chart-box{position:relative;height:260px}
+.chart-empty{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--mut);font-size:12px;gap:4px}
+.chart-empty i{font-size:1.6rem;color:var(--tb-line)}

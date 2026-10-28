@@ -1,1 +1,31 @@
-.gitignore
+
+# Database credentials
+config.php
+website/config.php
+
+# Environment secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies
+vendor/
+node_modules/
+
+# Runtime files
+logs/*
+!logs/.htaccess
+website/logs/*
+!website/logs/.htaccess
+
+# Customer uploads and generated files
+uploads/*
+!uploads/.gitkeep
+website/uploads/*
+!website/uploads/.gitkeep
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
